@@ -176,8 +176,8 @@ case $OPERATION in
 
       if [ ! -d "svf/" ];then
           git clone https://github.com/EboYu/SVF.git svf
-      else
-          git pull
+    #   else
+    #       git pull
       fi
 
 
