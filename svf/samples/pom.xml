@@ -9,7 +9,7 @@
     <dependencies>
         <dependency>
             <groupId>org.bytedeco</groupId>
-            <artifactId>svf-platform</artifactId>
+            <artifactId>svf</artifactId>
             <version>1.0.0</version>
         </dependency>
     </dependencies>
