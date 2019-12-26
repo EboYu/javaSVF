@@ -5,14 +5,14 @@
 
   <parent>
     <groupId>org.bytedeco</groupId>
-    <artifactId>javacpp-presets</artifactId>
-    <version>1.5.3-SNAPSHOT</version>
-    <relativePath>../../</relativePath>
+    <artifactId>svf</artifactId>
+    <version>${project.parent.version}</version>
+    <relativePath>../</relativePath>
   </parent>
 
   <groupId>org.bytedeco</groupId>
   <artifactId>svf-platform</artifactId>
-  <version>1.0.0-${project.parent.version}</version>
+  <version>${project.parent.version}</version>
   <name>JavaCPP Presets for SVF</name>
 
   <properties>

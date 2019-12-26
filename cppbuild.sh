@@ -163,26 +163,32 @@ function sedinplace {
     fi
 }
 
-if [[ -z ${PROJECTS:-} ]]; then
-    PROJECTS=(svf)
-fi
 
-for PROJECT in ${PROJECTS[@]}; do
-    case $OPERATION in
-        install)
-            if [[ ! -d $PROJECT ]]; then
-                echo "Warning: Project \"$PROJECT\" not found"
-            else
-                echo "Installing \"$PROJECT\""
-                mkdir -p $PROJECT/cppbuild
-                pushd $PROJECT/cppbuild
-                source ../cppbuild.sh
-                popd
-            fi
-            ;;
-        clean)
-            echo "Cleaning \"$PROJECT\""
-            rm -Rf $PROJECT/cppbuild
-            ;;
-    esac
-done
+
+case $OPERATION in
+    install)
+      echo "Installing"
+      mkdir -p cppbuild
+      cd cppbuild
+      mkdir -p $PLATFORM
+      cd $PLATFORM
+      INSTALL_PATH=`pwd`
+
+      if [ ! -d "svf/" ];then
+          git clone https://github.com/EboYu/SVF.git svf
+      else
+          git pull
+      fi
+
+
+      $CMAKE -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH svf/
+      make -j8
+      make install
+
+      cd ../..
+      ;;
+    clean)
+        echo "Cleaning"
+        #rm -rf cppbuild
+        ;;
+esac
