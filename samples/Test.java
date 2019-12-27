@@ -21,15 +21,18 @@ public class Test{
         StringVector moduleNameVec = new StringVector();
         PointerPointer arg_value = new PointerPointer((long)args.length);
         PointerPointer argv = new PointerPointer(args);
+        
         int arg_num = SVFProcessArguments(args.length,argv,arg_value,moduleNameVec);
+        BytePointer bp1 = new BytePointer("Demand-Driven Points-to Analysis\n");
+        CLParseCommandLineOptions(arg_num,arg_value,bp1);
+
         SVFSVFModule module = SVFModuleCreate(moduleNameVec);
         SVFDDAPass dda = DDAPassCreate();
         DDAPassRunOnModule(dda,module);
-        BytePointer bp2 = new BytePointer(".dvf", "UTF-8");
+        BytePointer bp2 = new BytePointer(".dvf");
         SVFDumpModulesToFile(module,bp2);
-        DDAPassPrintQueryPTS(dda, "result.txt");
-        DDAPassDispose(dda);
-        SVFSVFModuleDispose(module);
+        // DDAPassDispose(dda);
+        // SVFSVFModuleDispose(module);
 
         // System.out.printf("The arg_num is:%s\n",arg_num.getString());
         // for(long i=0;;i++){
