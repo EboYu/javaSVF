@@ -1,5 +1,6 @@
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+
 import org.bytedeco.javacpp.*;
 import org.bytedeco.svf.*;
 import static org.bytedeco.svf.global.svf.*;
@@ -31,6 +32,46 @@ public class Test{
         DDAPassRunOnModule(dda,module);
         BytePointer bp2 = new BytePointer(".dvf");
         SVFDumpModulesToFile(module,bp2);
+        
+        CPAGNodeSetPtr nodeSet = DDAPassExtractAllValidPtrs(dda);
+        
+        PointsToMap nodePTSSet = new PointsToMap();
+        DDAPassPointsToSet(dda, nodePTSSet);
+        System.out.println(nodePTSSet.size());
+        int i=0;
+        for (PointsToMap.Iterator it = nodePTSSet.begin();
+             it != nodePTSSet.end(); it.increment()) {
+            if(i==5)
+                break;
+            int sourceId = it.first();
+            i++;
+
+            StringBuilder builder = new StringBuilder();
+            builder.append("S:").append(sourceId).append("==>");
+            IntSet targets = it.second();
+            int j =0;
+
+            for(IntSet.Iterator iit=targets.begin();iit!=targets.end();iit.increment()){
+                if(j==targets.size())
+                    break;
+                j++;
+                builder.append(iit.get()).append(",");
+            }
+            System.out.println(builder.toString());
+        }
+        for (CPAGNodeSetPtr.Iterator it = nodeSet.begin();
+             it != nodeSet.end(); it.increment()) {
+            StringBuilder builder = new StringBuilder();
+            builder.append(it.first()).append(":");
+            CPAGNode_t node = it.second();
+            BytePointer functionName = node.functionName();
+            builder.append(functionName.getString()).append(":");
+            BytePointer location = node.location();
+            System.out.println(builder.append(location.getString()).toString());
+        }
+
+//        Iterator it = nodeSet.Iterator();
+
         // DDAPassDispose(dda);
         // SVFSVFModuleDispose(module);
 

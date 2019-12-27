@@ -3,6 +3,7 @@
 **/cppbuild/**
 **/target/**
 **/samples/data
+/src/gen
 
 # Mac
 .DS_Store
