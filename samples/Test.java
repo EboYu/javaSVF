@@ -29,36 +29,11 @@ public class Test{
 
         SVFSVFModule module = SVFModuleCreate(moduleNameVec);
         SVFDDAPass dda = DDAPassCreate();
-        DDAPassRunOnModule(dda,module);
-        BytePointer bp2 = new BytePointer(".dvf");
-        SVFDumpModulesToFile(module,bp2);
-        
-        CPAGNodeSetPtr nodeSet = DDAPassExtractAllValidPtrs(dda);
-        
-        PointsToMap nodePTSSet = new PointsToMap();
-        DDAPassPointsToSet(dda, nodePTSSet);
-        System.out.println(nodePTSSet.size());
+        DDAPassInitilize(dda,module);
         int i=0;
-        for (PointsToMap.Iterator it = nodePTSSet.begin();
-             it != nodePTSSet.end(); it.increment()) {
-            if(i==5)
-                break;
-            int sourceId = it.first();
-            i++;
 
-            StringBuilder builder = new StringBuilder();
-            builder.append("S:").append(sourceId).append("==>");
-            IntSet targets = it.second();
-            int j =0;
+        CPAGNodeSetPtr nodeSet = DDAPassExtractAllValidPtrs(dda);
 
-            for(IntSet.Iterator iit=targets.begin();iit!=targets.end();iit.increment()){
-                if(j==targets.size())
-                    break;
-                j++;
-                builder.append(iit.get()).append(",");
-            }
-            System.out.println(builder.toString());
-        }
         i=0;
         for (CPAGNodeSetPtr.Iterator it = nodeSet.begin();
              it != nodeSet.end(); it.increment()) {
@@ -66,8 +41,9 @@ public class Test{
                 break;
             i++;
             StringBuilder builder = new StringBuilder();
-            builder.append(it.first()).append(":");
+
             CPAGNode_t node = it.second();
+            builder.append(it.first()).append(":").append(node.variableType()).append(":").append(node.isTLPointer()).append(":");
             BytePointer functionName = node.functionName();
             builder.append(functionName.getString()).append(":");
             if(functionName.getString().equals("Glob"))
@@ -78,6 +54,90 @@ public class Test{
                 builder.append(":").append(node.irID());
             System.out.println(builder.toString());
         }
+
+
+        BytePointer query = new BytePointer("169");
+        DDAPassAnswerQuery(dda,query);
+        System.out.println("Points-to Set for answering 169");
+        PointsToMap nodePTSSet = new PointsToMap();
+        DDAPassPointsToSet(dda, nodePTSSet);
+        i=0;
+        for (PointsToMap.Iterator it = nodePTSSet.begin();
+             it != nodePTSSet.end(); it.increment()) {
+            if(i==nodePTSSet.size())
+                break;
+            long sourceId = it.first();
+            i++;
+
+            StringBuilder builder = new StringBuilder();
+            builder.append("S:").append(sourceId).append("==>");
+            LongSet targets = it.second();
+            int j =0;
+
+            for(LongSet.Iterator iit=targets.begin();iit!=targets.end();iit.increment()){
+                if(j==targets.size())
+                    break;
+                j++;
+                builder.append(iit.get()).append(",");
+            }
+            System.out.println(builder.toString());
+        }
+
+
+        query = new BytePointer("175");
+
+        DDAPassAnswerQuery(dda,query);
+        System.out.println("Points-to Set for answering 175");
+        nodePTSSet = new PointsToMap();
+        DDAPassPointsToSet(dda, nodePTSSet);
+        i=0;
+        for (PointsToMap.Iterator it = nodePTSSet.begin();
+             it != nodePTSSet.end(); it.increment()) {
+            if(i==nodePTSSet.size())
+                break;
+            long sourceId = it.first();
+            i++;
+
+            StringBuilder builder = new StringBuilder();
+            builder.append("S:").append(sourceId).append("==>");
+            LongSet targets = it.second();
+            int j =0;
+
+            for(LongSet.Iterator iit=targets.begin();iit!=targets.end();iit.increment()){
+                if(j==targets.size())
+                    break;
+                j++;
+                builder.append(iit.get()).append(",");
+            }
+            System.out.println(builder.toString());
+        }
+
+        i=0;
+        for (CPAGNodeSetPtr.Iterator it = nodeSet.begin();
+             it != nodeSet.end(); it.increment()) {
+            if(i==nodeSet.size())
+                break;
+            i++;
+            StringBuilder builder = new StringBuilder();
+
+            CPAGNode_t node = it.second();
+            builder.append(it.first()).append(":").append(node.variableType()).append(":").append(node.isTLPointer()).append(":");
+            BytePointer functionName = node.functionName();
+            builder.append(functionName.getString()).append(":");
+            if(functionName.getString().equals("Glob"))
+                builder.append(node.pointerName().getString());
+            else
+                builder.append(node.location().getString());
+            if(node.variableType()==1)
+                builder.append(":").append(node.irID());
+            System.out.println(builder.toString());
+        }
+
+        long parentID = DDAPassGetParentNode(dda,660003);
+        System.out.println("Get the parent node of the node 660003 is:"+parentID);
+        //DDAPassRunOnModule(dda,module);
+        BytePointer bp2 = new BytePointer(".dvf");
+        SVFDumpModulesToFile(module,bp2);
 
 //        Iterator it = nodeSet.Iterator();
 

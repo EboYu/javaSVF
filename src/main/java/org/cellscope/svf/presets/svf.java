@@ -37,12 +37,14 @@ public class svf implements InfoMapper {
         infoMap.put(new Info("std::string").annotations("@StdString").valueTypes("BytePointer", "String").pointerTypes("@Cast({\"char*\", \"std::string*\"}) BytePointer"))
                 .put(new Info("std::vector<std::string>").pointerTypes("StringVector").define())
                 .put(new Info("std::set<int>").pointerTypes("IntSet").define())
+                .put(new Info("std::set<long>").pointerTypes("LongSet").define())
                 .put(new Info("std::map<int,std::set<int> >").pointerTypes("PointsToMap").define())
+                .put(new Info("std::map<long,std::set<long> >").pointerTypes("PointsToMap").define())
                 .put(new Info("OpaqueDDAPass").pointerTypes("SVFDDAPass"))
                 .put(new Info("SVFDDAPass").valueTypes("SVFDDAPass").pointerTypes("@ByPtrPtr SVFDDAPass", "@Cast(\"SVFDDAPass*\") PointerPointer"))
                 .put(new Info("OpaqueSVFModule").pointerTypes("SVFSVFModule"))
                 .put(new Info("SVFSVFModule").valueTypes("SVFSVFModule").pointerTypes("@ByPtrPtr SVFSVFModule", "@Cast(\"SVFSVFModule*\") PointerPointer"))
-                .put(new Info("std::map<int,CPAGNode_t>").pointerTypes("CPAGNodeSetPtr").define())
+                .put(new Info("std::map<long,CPAGNode_t>").pointerTypes("CPAGNodeSetPtr").define())
                 .put(new Info("CPAGNodeSet").pointerTypes("CPAGNodeSetPtr"));
               
     }
