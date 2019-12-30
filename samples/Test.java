@@ -59,15 +59,24 @@ public class Test{
             }
             System.out.println(builder.toString());
         }
+        i=0;
         for (CPAGNodeSetPtr.Iterator it = nodeSet.begin();
              it != nodeSet.end(); it.increment()) {
+            if(i==nodeSet.size())
+                break;
+            i++;
             StringBuilder builder = new StringBuilder();
             builder.append(it.first()).append(":");
             CPAGNode_t node = it.second();
             BytePointer functionName = node.functionName();
             builder.append(functionName.getString()).append(":");
-            BytePointer location = node.location();
-            System.out.println(builder.append(location.getString()).toString());
+            if(functionName.getString().equals("Glob"))
+                builder.append(node.pointerName().getString());
+            else
+                builder.append(node.location().getString());
+            if(node.variableType()==1)
+                builder.append(":").append(node.irID());
+            System.out.println(builder.toString());
         }
 
 //        Iterator it = nodeSet.Iterator();
