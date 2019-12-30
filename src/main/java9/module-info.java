@@ -1,6 +1,6 @@
-module org.bytedeco.svf {
+module org.cellscope.svf {
   requires transitive org.bytedeco.javacpp;
-  exports org.bytedeco.svf.global;
-  exports org.bytedeco.svf.presets;
-  exports org.bytedeco.svf;
+  exports org.cellscope.svf.global;
+  exports org.cellscope.svf.presets;
+  exports org.cellscope.svf;
 }

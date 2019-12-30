@@ -2,8 +2,8 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 
 import org.bytedeco.javacpp.*;
-import org.bytedeco.svf.*;
-import static org.bytedeco.svf.global.svf.*;
+import org.cellscope.svf.*;
+import static org.cellscope.svf.global.svf.*;
 
 public class Test{
 

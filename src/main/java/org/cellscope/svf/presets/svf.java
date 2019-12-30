@@ -1,4 +1,4 @@
-package org.bytedeco.svf.presets;
+package org.cellscope.svf.presets;
 
 import org.bytedeco.javacpp.ClassProperties;
 import org.bytedeco.javacpp.FunctionPointer;
@@ -9,8 +9,8 @@ import org.bytedeco.javacpp.annotation.*;
 import org.bytedeco.javacpp.tools.*;
 
 @Properties(
-    target = "org.bytedeco.svf",
-    global = "org.bytedeco.svf.global.svf",
+    target = "org.cellscope.svf",
+    global = "org.cellscope.svf.global.svf",
     value = {
       @Platform(
         value = {
