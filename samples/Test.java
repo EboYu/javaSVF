@@ -56,7 +56,7 @@ public class Test{
         }
 
 
-        BytePointer query = new BytePointer("169");
+        /*BytePointer query = new BytePointer("169");
         DDAPassAnswerQuery(dda,query);
         System.out.println("Points-to Set for answering 169");
         PointsToMap nodePTSSet = new PointsToMap();
@@ -112,29 +112,8 @@ public class Test{
             System.out.println(builder.toString());
         }
 
-        i=0;
-        for (CPAGNodeSetPtr.Iterator it = nodeSet.begin();
-             it != nodeSet.end(); it.increment()) {
-            if(i==nodeSet.size())
-                break;
-            i++;
-            StringBuilder builder = new StringBuilder();
-
-            CPAGNode_t node = it.second();
-            builder.append(it.first()).append(":").append(node.variableType()).append(":").append(node.isTLPointer()).append(":");
-            BytePointer functionName = node.functionName();
-            builder.append(functionName.getString()).append(":");
-            if(functionName.getString().equals("Glob"))
-                builder.append(node.pointerName().getString());
-            else
-                builder.append(node.location().getString());
-            if(node.variableType()==1)
-                builder.append(":").append(node.irID());
-            System.out.println(builder.toString());
-        }
-
         long parentID = DDAPassGetParentNode(dda,660003);
-        System.out.println("Get the parent node of the node 660003 is:"+parentID);
+        System.out.println("Get the parent node of the node 660003 is:"+parentID);*/
         //DDAPassRunOnModule(dda,module);
         BytePointer bp2 = new BytePointer(".dvf");
         SVFDumpModulesToFile(module,bp2);
